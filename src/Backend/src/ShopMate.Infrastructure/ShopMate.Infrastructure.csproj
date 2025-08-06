@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShopMate.Application\ShopMate.Application.csproj" />
+    <ProjectReference Include="..\ShopMate.Domain\ShopMate.Domain.csproj" />
+    <ProjectReference Include="..\ShopMate.Persistence\ShopMate.Persistence.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
