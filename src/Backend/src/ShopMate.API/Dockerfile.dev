@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0
+
+WORKDIR /app
+
+# Копируем csproj для восстановления зависимостей (относительно контекста ./Backend/src)
+COPY ShopMate.API/*.csproj ./ShopMate.API/
+COPY ShopMate.Application/*.csproj ./ShopMate.Application/
+COPY ShopMate.Domain/*.csproj ./ShopMate.Domain/
+COPY ShopMate.Infrastructure/*.csproj ./ShopMate.Infrastructure/
+COPY ShopMate.Persistence/*.csproj ./ShopMate.Persistence/
+
+RUN dotnet restore ./ShopMate.API/ShopMate.API.csproj
+
+# Копируем весь исходный код
+COPY . .
+
+WORKDIR /app/ShopMate.API
+
+CMD ["dotnet", "watch", "run", "--urls=http://0.0.0.0:80"]
