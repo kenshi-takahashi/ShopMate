@@ -32,11 +32,10 @@ namespace ShopMate.Persistence.Data.Configuration
                 .HasForeignKey(l => l.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-many для SharedUsers настраивается зеркально в UserConfiguration
             builder.HasMany(l => l.SharedUsers)
                 .WithMany(u => u.SharedShoppingLists)
                 .UsingEntity<Dictionary<string, object>>(
-                    "ShoppingListUser",
+                    "ShoppingListMembers",
                     j => j
                         .HasOne<User>()
                         .WithMany()
@@ -47,7 +46,7 @@ namespace ShopMate.Persistence.Data.Configuration
                         .WithMany()
                         .HasForeignKey("ShoppingListId")
                         .OnDelete(DeleteBehavior.Cascade))
-                .ToTable("ShoppingListUsers");
+                .ToTable("ShoppingListMembers");
         }
     }
 }

@@ -45,17 +45,15 @@ namespace ShopMate.Persistence.Data.Configuration
             builder.HasIndex(u => u.Username)
                 .IsUnique();
 
-            // Связь 1:M с ShoppingList как владельцем
             builder.HasMany(u => u.ShoppingLists)
                 .WithOne(l => l.Owner)
                 .HasForeignKey(l => l.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-many c ShoppingList через таблицу связей
             builder.HasMany(u => u.SharedShoppingLists)
                 .WithMany(l => l.SharedUsers)
                 .UsingEntity<Dictionary<string, object>>(
-                    "ShoppingListUser",
+                    "ShoppingListMembers",
                     j => j
                         .HasOne<ShoppingList>()
                         .WithMany()
@@ -66,7 +64,7 @@ namespace ShopMate.Persistence.Data.Configuration
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade))
-                .ToTable("ShoppingListUsers");
+                .ToTable("ShoppingListMembers");
         }
     }
 }
