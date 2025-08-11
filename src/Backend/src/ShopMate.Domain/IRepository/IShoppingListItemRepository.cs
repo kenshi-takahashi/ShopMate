@@ -6,7 +6,7 @@ namespace ShopMate.Domain.IRepository
     {
         Task<IEnumerable<ShoppingListItem>> GetByShoppingListAsync(Guid shoppingListId);
         Task<IEnumerable<ShoppingListItem>> GetByNameAsync(string name);
-        Task<IEnumerable<ShoppingListItem>> GetByQuantityAsync(string quantity);
+        Task<IEnumerable<ShoppingListItem>> GetByQuantityAsync(int quantity);
         Task<IEnumerable<ShoppingListItem>> GetByPriceRangeAsync(decimal? minPrice, decimal? maxPrice);
         Task<IEnumerable<ShoppingListItem>> GetByNotesAsync(string notesSubstring);
         Task<IEnumerable<ShoppingListItem>> GetByUnitAsync(string unit);
