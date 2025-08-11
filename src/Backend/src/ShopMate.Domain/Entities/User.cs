@@ -17,12 +17,6 @@ namespace ShopMate.Domain.Entities
         [StringLength(255)]
         public string PasswordHash { get; set; } = string.Empty;
         
-        [StringLength(100)]
-        public string? FirstName { get; set; }
-        
-        [StringLength(100)]
-        public string? LastName { get; set; }
-        
         public DateTime? LastLoginAt { get; set; }
         
         public bool IsActive { get; set; } = true;

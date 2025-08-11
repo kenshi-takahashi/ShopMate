@@ -24,12 +24,6 @@ namespace ShopMate.Persistence.Data.Configuration
                 .IsRequired()
                 .HasMaxLength(255);
 
-            builder.Property(u => u.FirstName)
-                .HasMaxLength(100);
-
-            builder.Property(u => u.LastName)
-                .HasMaxLength(100);
-
             builder.Property(u => u.IsActive)
                 .HasDefaultValue(true);
 
