@@ -1,6 +1,22 @@
 version: '3.9'
 
 services:
+
+  migrator:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /app
+    volumes:
+      - ./Backend/src:/app
+    environment:
+      - CONNECTION_STRING=${CONNECTION_STRING}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >-
+      bash -lc '
+        dotnet tool install -g dotnet-ef >/dev/null 2>&1 || true;
+        /root/.dotnet/tools/dotnet-ef database update --project ShopMate.Persistence --context ShopMateDbContext
+      '
   shopmate.api:
     build:
       context: ./Backend/src
@@ -11,6 +27,7 @@ services:
     volumes:
       - ./Backend/src:/app
     depends_on:
+      - migrator
       - postgres
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
@@ -29,6 +46,12 @@ services:
       - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
 
   pgadmin:
     image: dpage/pgadmin4
